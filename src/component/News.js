@@ -48,8 +48,8 @@ export class News extends Component {
     try {
       this.setState({ loading: true, error: null });
       
-      const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=430b746ecd3a407cab93d6c806ed1f50&page=${page}&pageSize=${pageSize}`;
-      
+      // const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=430b746ecd3a407cab93d6c806ed1f50&page=${page}&pageSize=${pageSize}`;
+       const url = `https://gnews.io/api/v4/search?q=${category}&lang=en&country=${country}&max=10&apikey=fe62bb37099a296e4e1053d44a9f860a&page=${page}&pageSize=${pageSize}`;
       const response = await fetch(url);
       
       if (!response.ok) {
@@ -58,9 +58,12 @@ export class News extends Component {
       
       const parsedData = await response.json();
       
-      if (parsedData.status !== "ok") {
-        throw new Error(parsedData.message || "News API error");
-      }
+// Example response structure:
+// {
+//   "totalArticles": 3021,
+//   "articles": [ ... ]
+// }
+
       
       this.setState({ 
         articles: parsedData.articles || [], // Ensure we always have an array
